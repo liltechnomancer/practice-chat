@@ -1,0 +1,11 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "simple chat practice",
+  "main": "index.js",
+  "author": "Levi Robertson",
+  "license": "MIT",
+  "dependencies": {
+    "websocket": "^1.0.25"
+  }
+}
