@@ -1,5 +1,6 @@
+import http from "http";
+import escapeHtml from "./utils/escape-html";
 const WebSocketServer = require("websocket").server;
-const http = require("http");
 
 const server = http.createServer((req, res) => {});
 server.listen(1337, () => console.log("listening"));
