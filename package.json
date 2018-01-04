@@ -10,6 +10,15 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-3": "^6.24.1",
     "jest": "^22.0.3",
+    "prettier": "^1.9.2",
     "websocket": "^1.0.25"
+  },
+  "scripts": {
+    "develop": "babel src --watch --out-dir lib",
+    "run": "nodemon ./lib/app.js"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
   }
 }

@@ -1,4 +1,4 @@
-import escapeHtml from "../utils/escape-html";
+import escapeHtml from "../src/utils/escape-html";
 import fs from "fs";
 
 test("escapes html inputs", () => {

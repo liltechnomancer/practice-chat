@@ -2,15 +2,24 @@ import http from "http";
 import escapeHtml from "./utils/escape-html";
 const WebSocketServer = require("websocket").server;
 
+
+const PORT = process.argv[2] || 1337
 const server = http.createServer((req, res) => {});
-server.listen(1337, () => console.log("listening"));
+
+server.listen(1337, () => console.log("listening on " + PORT));
 
 const colors = ["red", "green"];
 let clients = [];
 
-socketServer = new WebSocketServer({
+const socketServer = new WebSocketServer({
   httpServer: server
 });
+
+const onMessage = clients => message => {
+  if (message.type === 'utf8') {
+    console.log(message)
+  }
+}
 
 socketServer.on("request", req => {
   const connection = req.accept(null, req.origin);
