@@ -27,10 +27,20 @@ socketServer.on('request', req => {
   clients.push(connection)
   connection.on('message', message => {
     if (message.type === 'utf8') {
-      console.log(message)
-      clients.map(x =>
-        x.sendUTF(JSON.stringify({ type: 'message', text: message.utf8Data }))
-      )
+      const msg = JSON.parse(message.utf8Data)
+      console.log(msg)
+      if (msg.type === 'message')
+        clients.map(x => x.sendUTF(JSON.stringify(msg)))
+      if (msg.type === 'userJoined')
+        clients.map(x =>
+          x.sendUTF(
+            JSON.stringify({
+              type: 'message',
+              username: 'bot',
+              text: `${msg.username} has joined the chat!`
+            })
+          )
+        )
     }
   })
 

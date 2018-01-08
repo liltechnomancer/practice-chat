@@ -14,15 +14,16 @@
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
-    "eslint-watch": "^3.1.3",
     "jest": "^22.0.3",
+    "jest-cli": "^22.0.4",
     "prettier": "^1.9.2",
     "websocket": "^1.0.25"
   },
   "scripts": {
-    "compile": "yarn run babel src --watch --out-dir lib",
-    "develop": "yarn run nodemon ./lib/app.js",
-    "lint": "yarn run esw -w ./src"
+    "compile": "babel src --watch --out-dir lib",
+    "develop": "nodemon ./lib/app.js",
+    "lint": "esw -w ./src",
+    "test": "jest ./__tests__ --watch"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^12.1.0",
