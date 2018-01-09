@@ -6,19 +6,24 @@ const Layout = styled('div')`
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-rows: 90%;
-  grid-template-columns: 90% 10%;
+  grid-template-rows: 95% 5%;
 `
 
 const MessageBox = styled('div')`
-  overflow: scroll;
+  overflow-y: scroll;
   grid-column: 1 / span 2;
 `
 
 const Form = styled('form')`
+  display: grid;
+  grid-template-columns: 100%;
   grid-column 1 / span 2;
   height: 100%;
   width: 100%;
+`
+
+const Submit = styled('input')`
+  display: none;
 `
 
 class Chat extends Component {
@@ -51,14 +56,15 @@ class Chat extends Component {
             value={this.state.message}
             onChange={e => this.handleMsgChange(e.target.value)}
           />
-          <button
+          <Submit
+            type="submit"
+            value="Submit"
             onClick={e => {
               e.preventDefault()
+              this.setState({ message: '' })
               this.props.handleSubmit(this.state.message)
             }}
-          >
-            Send
-          </button>
+          />
         </Form>
       </Layout>
     )
