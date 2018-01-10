@@ -19,7 +19,8 @@
     "jest-cli": "^22.0.4",
     "prettier": "^1.9.2",
     "react-emotion": "^8.0.12",
-    "websocket": "^1.0.25"
+    "websocket": "^1.0.25",
+    "ws": "^4.0.0"
   },
   "scripts": {
     "compile": "babel src --watch --out-dir lib",

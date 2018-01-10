@@ -1,18 +1,17 @@
 import http from 'http'
-
 // import escapeHtml from './utils/escape-html'
-const WebSocketServer = require('websocket').server
+import WebSocket from 'ws'
 
 const PORT = process.argv[2] || 1337
 const server = http.createServer((req, res) => {})
 
 server.listen(1337, () => console.log('listening on ' + PORT))
 
-// const colors = ['red', 'green']
 let clients = []
 
-const socketServer = new WebSocketServer({
-  httpServer: server
+const wss = new WebSocket.Server({
+  server
+  // path: '/chat'
 })
 
 const onMessage = clients => message => {
@@ -21,30 +20,26 @@ const onMessage = clients => message => {
   }
 }
 
-socketServer.on('request', req => {
-  const connection = req.accept(null, req.origin)
-  console.log(`connection from ${req.origin}`)
-  clients.push(connection)
-  connection.on('message', message => {
-    if (message.type === 'utf8') {
-      const msg = JSON.parse(message.utf8Data)
-      console.log(msg)
-      if (msg.type === 'message')
-        clients.map(x => x.sendUTF(JSON.stringify(msg)))
-      if (msg.type === 'userJoined')
-        clients.map(x =>
-          x.sendUTF(
-            JSON.stringify({
-              type: 'message',
-              username: 'bot',
-              text: `${msg.username} has joined the chat!`
-            })
-          )
+wss.on('connection', (ws, req) => {
+  ws.on('message', message => {
+    const msg = JSON.parse(message)
+    console.log(msg)
+    if (msg.type === 'message')
+      wss.clients.forEach(x => x.send(JSON.stringify(msg)))
+    if (msg.type === 'userJoined') {
+      wss.clients.forEach(x =>
+        x.send(
+          JSON.stringify({
+            type: 'message',
+            username: 'bot',
+            text: `${msg.username} has joined the chat!`
+          })
         )
+      )
     }
   })
 
-  connection.on('close', connection => {
-    // close connection
-  })
+  // connection.on('close', connection => {
+  //   // close connection
+  // })
 })
