@@ -12,6 +12,7 @@ const Layout = styled('div')`
 const MessageBox = styled('div')`
   overflow-y: scroll;
   grid-column: 1 / span 2;
+  margin: 1rem;
 `
 
 const Form = styled('form')`
@@ -26,6 +27,23 @@ const Submit = styled('input')`
   display: none;
 `
 
+const Input = styled('input')`
+  border-radius: 3px;
+  border: 1px solid black;
+  margin: 0.5rem;
+`
+
+const Message = styled('div')`
+  display: block;
+  margin: 0.5rem;
+`
+
+const Name = styled('div')`
+  font-weight: bold;
+`
+
+const Text = styled('div')``
+
 class Chat extends Component {
   constructor() {
     super()
@@ -39,20 +57,23 @@ class Chat extends Component {
   render() {
     const allMessages = map(
       m => (
-        <li>
-          {m.username}: {m.text}
-        </li>
+        <Message>
+          <Name>{m.username}</Name>
+          <Text>{m.text}</Text>
+        </Message>
       ),
       this.props.messages
     )
     return (
       <Layout>
         <MessageBox>
-          <ul>{allMessages}</ul>
+          <div>{allMessages}</div>
         </MessageBox>
         <Form>
-          <input
+          <Input
             type="text"
+            ref="msg"
+            placeholder="Tell a tale..."
             value={this.state.message}
             onChange={e => this.handleMsgChange(e.target.value)}
           />
