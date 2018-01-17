@@ -1,17 +1,13 @@
 import { Map } from 'immutable'
-import { lens, prop, assoc, set } from 'ramda'
+import { lens, prop, assoc, set, over, omit } from 'ramda'
 
 const socketLens = lens(prop('sockets'), assoc('sockets'))
 
-const Rooms = (rooms = Map()) => {
-
+const Rooms = (rooms = {}) => {
 
   const map = (fn) => Rooms(fn(rooms))
   const chain = fn => fn(rooms)
   const id = _ => rooms
-
-  //TODO: Making Rooms monadic, message should be seperate.
-  const message = (opts, ws) => {}
 
   return {
     chain,
@@ -23,31 +19,33 @@ const Rooms = (rooms = Map()) => {
 const makeRoom = id => {
   const room = {
     id,
-    sockets: Map()
+    sockets: {} 
   }
   return room
 }
 
-const addWsToRoom = (ws, room) => 
-  room.sockets.set(ws.id, ws)
-
-const removeWsFromRoom = (ws, room) => 
-  room.sockets.delete(ws.id, ws)
-
 const getRoom = (id, rooms) => {
-  const room = rooms.get(id)
+  const room = rooms[id]
   if (!room) return makeRoom(id)
   return room
 }
 
+const addWsToRoom = ws => sockets => 
+ ({ ...sockets, [ws.id]: ws })
+
+const removeWsFromRoom = ws => sockets => 
+  omit([ws.id], sockets) 
+
 const join = id => ws => rooms => {
   const room = getRoom(id, rooms)
-  return set(socketLens, addWsToRoom(ws, room), room)
+  const updated = over(socketLens, addWsToRoom(ws), room)
+  return { ...rooms, [id]: updated }
 }
 
 const leave = id => ws => rooms => {
   const room = getRoom(id, rooms)
-  return set(socketLens, removeWsFromRoom(ws, room), room)
+  const updated = over(socketLens, removeWsFromRoom(ws), room)
+  return { ...rooms, [id]: updated }
 }
 
 export default Rooms

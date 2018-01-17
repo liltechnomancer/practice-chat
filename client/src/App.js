@@ -25,7 +25,7 @@ class App extends Component {
   componentWillMount() {
     const connection = new WebSocket('ws://localhost:1337')
     connection.onopen = () =>
-      connection.send(JSON.stringify({ type: 'New Connection' }))
+      connection.send(JSON.stringify({ type: 'joinroom', room: {id: 1} }))
     connection.onmessage = this.recieveMessage
     this.setState({ ...this.state, connection })
   }
