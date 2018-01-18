@@ -8,6 +8,7 @@ class App extends Component {
     super()
     this.state = {
       name: '',
+      room: '',
       connection: null,
       isInChat: false,
       messages: []
@@ -24,8 +25,6 @@ class App extends Component {
 
   componentWillMount() {
     const connection = new WebSocket('ws://localhost:1337')
-    connection.onopen = () =>
-      connection.send(JSON.stringify({ type: 'joinroom', room: {id: 1} }))
     connection.onmessage = this.recieveMessage
     this.setState({ ...this.state, connection })
   }
@@ -35,17 +34,33 @@ class App extends Component {
     console.log(this.state.name)
   }
 
+  handleRoomChange = val => {
+    this.setState({ room: val })
+    console.log(this.state.room)
+  }
+
   sendMessage = msg => {
     const con = this.state.connection
     con.send(
-      JSON.stringify({ type: 'message', username: this.state.name, text: msg })
+      JSON.stringify({
+        type: 'message',
+        username: this.state.name,
+        text: msg,
+        room: this.state.room
+      })
     )
   }
 
   handleSubmit = e => {
     const con = this.state.connection
     e.preventDefault()
-    con.send(JSON.stringify({ type: 'userJoined', username: this.state.name }))
+    con.send(
+      JSON.stringify({
+        type: 'joinroom',
+        username: this.state.name,
+        room: this.state.room ? this.state.room : 'general'
+      })
+    )
     this.setState({ ...this.state, isInChat: true })
   }
 
@@ -64,7 +79,14 @@ class App extends Component {
             <input
               type="text"
               value={this.state.name}
+              placeholder="Enter your name"
               onChange={e => this.handleNameChange(e.target.value)}
+            />
+            <input
+              type="text"
+              value={this.state.room}
+              placeholder="Enter the room name"
+              onChange={e => this.handleRoomChange(e.target.value)}
             />
             <input type="submit" value="Submit" onClick={this.handleSubmit} />
           </form>

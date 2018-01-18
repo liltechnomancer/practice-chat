@@ -4,22 +4,27 @@ import { lens, prop, assoc, set, over, omit } from 'ramda'
 const socketLens = lens(prop('sockets'), assoc('sockets'))
 
 const Rooms = (rooms = {}) => {
-
-  const map = (fn) => Rooms(fn(rooms))
+  const map = fn => Rooms(fn(rooms))
   const chain = fn => fn(rooms)
   const id = _ => rooms
+  const get = (id, fn) => {
+    const room = rooms[id]
+    fn(room)
+    return Rooms(rooms)
+  }
 
   return {
+    get,
     chain,
     map,
-    id 
+    id
   }
 }
 
 const makeRoom = id => {
   const room = {
     id,
-    sockets: {} 
+    sockets: {}
   }
   return room
 }
@@ -30,11 +35,9 @@ const getRoom = (id, rooms) => {
   return room
 }
 
-const addWsToRoom = ws => sockets => 
- ({ ...sockets, [ws.id]: ws })
+const addWsToRoom = ws => sockets => ({ ...sockets, [ws.id]: ws })
 
-const removeWsFromRoom = ws => sockets => 
-  omit([ws.id], sockets) 
+const removeWsFromRoom = ws => sockets => omit([ws.id], sockets)
 
 const join = id => ws => rooms => {
   const room = getRoom(id, rooms)
@@ -50,9 +53,4 @@ const leave = id => ws => rooms => {
 
 export default Rooms
 
-export {
-  Rooms,
-  join,
-  leave
-}
-
+export { Rooms, join, leave }

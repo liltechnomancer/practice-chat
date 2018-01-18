@@ -2,7 +2,7 @@
   "name": "chat",
   "version": "1.0.0",
   "description": "simple chat practice",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "author": "Levi Robertson",
   "license": "MIT",
   "dependencies": {
@@ -17,12 +17,15 @@
     "eslint-plugin-standard": "^3.0.1",
     "folktale": "^2.0.1",
     "immutable": "^3.8.2",
-    "jest": "^22.0.3",
-    "jest-cli": "^22.0.4",
+    "jest": "^22.1.2",
+    "jest-cli": "^22.1.2",
+    "micro-dev": "^2.2.0",
     "normalize.css": "^7.0.0",
-    "prettier": "^1.9.2",
+    "prettier": "^1.10.2",
     "ramda": "^0.25.0",
     "react-emotion": "^8.0.12",
+    "socket.io": "^2.0.4",
+    "uuid": "^3.2.1",
     "websocket": "^1.0.25",
     "ws": "^4.0.0"
   },
@@ -30,7 +33,8 @@
     "compile": "babel src --watch --out-dir lib",
     "develop": "nodemon ./lib/app.js",
     "lint": "esw -w ./src",
-    "test": "jest ./__tests__ --watch"
+    "test": "jest ./__tests__ --watch",
+    "start": "micro-dev"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^12.1.0",
