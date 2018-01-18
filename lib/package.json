@@ -2,7 +2,7 @@
   "name": "chat",
   "version": "1.0.0",
   "description": "simple chat practice",
-  "main": "./lib/index.js",
+  "main": "index.js",
   "author": "Levi Robertson",
   "license": "MIT",
   "dependencies": {
@@ -29,8 +29,8 @@
     "develop": "nodemon ./lib/app.js",
     "lint": "esw -w ./src",
     "test": "jest ./__tests__ --watch",
-    "dev": "micro-dev -p 8080",
-    "start": "micro"
+    "dev": "micro-dev",
+    "start": "node index.js"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^12.1.0",

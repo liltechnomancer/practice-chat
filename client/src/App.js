@@ -24,7 +24,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const connection = new WebSocket('ws://localhost:1337')
+    const connection = new WebSocket('wss://chat-fhsmuyaqod.now.sh')
     connection.onmessage = this.recieveMessage
     this.setState({ ...this.state, connection })
   }
