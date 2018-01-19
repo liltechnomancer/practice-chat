@@ -12,5 +12,5 @@ const wss = new WebSocket.Server({
 })
 
 wsserver(wss)
-server.listen(3000)
+server.listen(8080)
 module.exports = () => 'Hello, friend.'

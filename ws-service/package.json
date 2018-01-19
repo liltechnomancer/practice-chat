@@ -18,7 +18,7 @@
     "develop": "nodemon ./lib/app.js",
     "lint": "esw -w ./src",
     "test": "jest ./__tests__ --watch",
-    "dev": "micro-dev -p 8080",
+    "dev": "nodemon micro -p 8080",
     "start": "micro"
   },
   "devDependencies": {

@@ -36,6 +36,7 @@ const send = (msg, rooms) => {
 //   2. Keep it like this, and have the rooms be filled on connection. Possibly a great option, as
 //   this should be fine scaling horizontally? If the chat app needs to scale too much I will be
 //   re-wriitng in Go anyway, so don't trip either way.
+
 module.exports = wss => {
   let rooms = (0, _rooms.Rooms)();
   wss.on('connection', (ws, req) => {
@@ -50,7 +51,9 @@ module.exports = wss => {
     });
 
     ws.on('close', connection => {
-      connection.close();
+      // connection.terminate()
     });
+
+    ws.on('error', console.error);
   });
 };

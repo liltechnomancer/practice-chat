@@ -38,5 +38,5 @@ const wss = new _ws2.default.Server({
 });
 
 (0, _wss2.default)(wss);
-server.listen(3000);
+server.listen(8080);
 module.exports = () => 'Hello, friend.';
