@@ -21,6 +21,13 @@ const Rooms = (rooms = {}) => {
   }
 }
 
+const RoomManager = Rooms => {
+  const add = console.log
+  const remove = console.log
+  const join = console.log
+  const leave = console.log
+}
+
 const makeRoom = id => {
   const room = {
     id,

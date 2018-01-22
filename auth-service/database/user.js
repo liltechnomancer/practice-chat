@@ -1,14 +1,18 @@
-const { User, create, find } = require('./wrapper')
+const { User, create, find, get } = require('./wrapper')
 const { secureStore } = require('../authentication/password')
+
+const _find = find(User)
 
 const createUser = user => {
   const store = pass => create(User, { ...user, password: pass })
-  secureStore(store, user.password)
+  return secureStore(store, user.password)
 }
 
-const findUser = user => find(User, user)
+const findUser = find(User)
+const getUser = () => get(User)
 
 module.exports = {
   createUser,
-  findUser
+  findUser,
+  getUser
 }
